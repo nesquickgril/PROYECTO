@@ -5,7 +5,7 @@ Descripción del Proyecto
 
 Este proyecto consiste en el desarrollo de una versión del juego UNO, utilizando una combinación de C++ y lenguaje ensamblador (NASM).
 
-## 🚀 Características del Proyecto
+## Características del Proyecto
 * **Interfaz Gráfica:** Desarrollada con **SDL2**, permitiendo una experiencia visual fluida.
 * **Lógica en Ensamblador:** Los cálculos de turnos, validación de cartas, efectos especiales y el castigo del "UNO" están implementados en **ASM (NASM)** para maximizar la eficiencia.
 * **IA Competitiva:** Jugadores automáticos que validan sus jugadas mediante lógica integrada.
