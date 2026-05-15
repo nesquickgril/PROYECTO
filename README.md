@@ -13,7 +13,7 @@ Este proyecto consiste en el desarrollo de una versión del juego UNO, utilizand
 
 ---
 
-## 📁 Estructura del Repositorio
+## Estructura del Repositorio
 * `main.cpp`: Código fuente principal en C++.
 * `uno.asm`: Lógica de juego escrita en Ensamblador x86_64.
 * `cartas/`: Directorio con todos los assets gráficos (.png).
@@ -21,7 +21,7 @@ Este proyecto consiste en el desarrollo de una versión del juego UNO, utilizand
 
 ---
 
-## 🛠️ Requisitos para Compilar
+## Requisitos para Compilar
 Para compilar este proyecto desde cero, necesitarás:
 1.  **MinGW-w64** (Compilador `g++`).
 2.  **NASM** (Netwide Assembler).
@@ -32,7 +32,7 @@ Para compilar este proyecto desde cero, necesitarás:
 
 ---
 
-## 💻 Instrucciones de Compilación (Windows)
+## Instrucciones de Compilación (Windows)
 
 1.  **Compilar el archivo de Ensamblador:**
     ```bash
