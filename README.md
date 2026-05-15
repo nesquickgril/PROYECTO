@@ -4,33 +4,56 @@ LENGUAJE DE INTERFAZ "JUEGO DEL UNO"
 Descripción del Proyecto
 
 Este proyecto consiste en el desarrollo de una versión del juego UNO, utilizando una combinación de C++ y lenguaje ensamblador (NASM).
-El objetivo principal es implementar la lógica del juego en bajo nivel (ensamblador), mientras que la interacción con el usuario se maneja en C++, permitiendo así comprender la integración entre ambos lenguajes.
 
-El sistema actualmente funciona en modo consola, donde el jugador puede:
-Visualizar sus cartas
-Elegir una carta para jugar
-Robar cartas
-Validar jugadas según las reglas de UNO
-Interactuar con jugadores controlados por el sistema (IA)
+## 🚀 Características del Proyecto
+* **Interfaz Gráfica:** Desarrollada con **SDL2**, permitiendo una experiencia visual fluida.
+* **Lógica en Ensamblador:** Los cálculos de turnos, validación de cartas, efectos especiales y el castigo del "UNO" están implementados en **ASM (NASM)** para maximizar la eficiencia.
+* **IA Competitiva:** Jugadores automáticos que validan sus jugadas mediante lógica integrada.
+* **Inventario Dinámico:** Gestión de manos grandes mediante una interfaz de inventario expandible.
 
-La validación de las jugadas se realiza en ensamblador, mediante funciones que determinan si una carta es válida dependiendo del color o valor de la carta en la mesa.
+---
 
-Tecnologías Utilizadas
-C++ → Interfaz del usuario
-Ensamblador (NASM) → Lógica del juego
-WSL (Windows Subsystem for Linux) → Entorno de desarrollo
-G++ → Compilador de C++
+## 📁 Estructura del Repositorio
+* `main.cpp`: Código fuente principal en C++.
+* `uno.asm`: Lógica de juego escrita en Ensamblador x86_64.
+* `cartas/`: Directorio con todos los assets gráficos (.png).
+* `*.ttf`: Fuente tipográfica utilizada en la interfaz.
 
-Estado del Proyecto
+---
 
-Actualmente, el proyecto se encuentra en fase de desarrollo inicial con:
+## 🛠️ Requisitos para Compilar
+Para compilar este proyecto desde cero, necesitarás:
+1.  **MinGW-w64** (Compilador `g++`).
+2.  **NASM** (Netwide Assembler).
+3.  **Librerías SDL2**:
+    * SDL2 (Core)
+    * SDL2_image
+    * SDL2_ttf
 
-Integración funcional entre C++ y ensamblador
-Validación de jugadas
-Pruebas en consola
+---
 
-Próximamente se planea:
+## 💻 Instrucciones de Compilación (Windows)
 
-Implementar una interfaz gráfica con SFML
-Mejorar la experiencia visual del juego
-Agregar más reglas completas del UNO
+1.  **Compilar el archivo de Ensamblador:**
+    ```bash
+    nasm -f win64 uno.asm -o uno.obj
+    ```
+
+2.  **Compilar el ejecutable final vinculando C++ y el objeto ASM:**
+    ```bash
+    g++ main.cpp uno.obj -o juego_uno.exe -lSDL2 -lSDL2_image -lSDL2_ttf
+    ```
+    o
+    ```bash
+    g++ main.cpp uno.obj -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lgdi32 -lusp10 -lole32 -luuid -lwinmm -lrpcrt4 -lsetupapi -limm32 -lversion -loleaut32 -lcfgmgr32 -o juego_uno.exe
+    ```
+
+---
+
+## 🎮 Cómo Jugar
+Si solo deseas probar el juego sin configurar el entorno de desarrollo:
+1.  Ve a la sección de [**Releases**](https://github.com/nesquickgril/PROYECTO/releases/tag/v1.0) de este repositorio.
+2.  Descarga el archivo `UNO.zip`.
+3.  Descomprime el contenido en una carpeta.
+4.  Ejecuta `juego_uno.exe`.
+
