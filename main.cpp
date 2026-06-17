@@ -9,6 +9,7 @@
 
 using namespace std;
 
+int colorComodin = 0;
 // ================= ASM =================
 extern "C" {
 
@@ -282,10 +283,23 @@ int main(int argc, char* argv[]) {
 
     if (mesa.valor >= 13)
         mesa.color = generar_color();
-
+    
+    int colorActivo = mesa.color;
     int turno = 0;
     int direccion = 1;
     int idGanador = -1;
+
+    // ===== Variables para la animación =====
+    
+    struct anim {
+        Carta carta;
+        float x, y;
+        bool activa = false;
+    } anim;
+
+    float destX = 650.0f; 
+    float destY = 260.0f; 
+    float velocidadAnim = 0.12f;
 
     // ================= LOOP =================
     while (running) {
@@ -386,6 +400,9 @@ int main(int argc, char* argv[]) {
                                 carta_valida(cj, cm)) {
 
                                 mesa = c;
+
+                                if (c.valor < 13)
+                                    colorComodin = 0;
 
                                 manos[0].erase(
                                     manos[0].begin() + i
@@ -503,10 +520,10 @@ int main(int argc, char* argv[]) {
                                                 int my = event.button.y;
 
                                             if (my >= 300 && my <= 400) {
-                                            if (mx >= 250 && mx <= 350) { mesa.color = 1; elegirColor = false; }
-                                            if (mx >= 400 && mx <= 500) { mesa.color = 2; elegirColor = false; }
-                                            if (mx >= 550 && mx <= 650) { mesa.color = 3; elegirColor = false; }
-                                            if (mx >= 700 && mx <= 800) { mesa.color = 4; elegirColor = false; }
+                                            if (mx >= 250 && mx <= 350) { mesa.color = 1; colorActivo = 1; colorComodin = 1; elegirColor = false; }
+                                            if (mx >= 400 && mx <= 500) { mesa.color = 2; colorActivo = 2; colorComodin = 2; elegirColor = false; }
+                                            if (mx >= 550 && mx <= 650) { mesa.color = 3; colorActivo = 3; colorComodin = 3; elegirColor = false; }
+                                            if (mx >= 700 && mx <= 800) { mesa.color = 4; colorActivo = 4; colorComodin = 4; elegirColor = false; }
                                         }
                                         }
                                     }
@@ -573,6 +590,8 @@ int main(int argc, char* argv[]) {
 
                     if (mesa.valor >= 13) {
                         mesa.color = (rand() % 4) + 1;
+                        colorActivo = mesa.color;
+                        colorComodin = mesa.color;
                     }
 
                     break;
@@ -676,31 +695,48 @@ int main(int argc, char* argv[]) {
         SDL_DestroyTexture(texMazo);
 
         // ================= MESA =================
-        SDL_Texture* texMesa =
-            cargarTexturaCarta(
-                mesa,
-                renderer
-            );
+        SDL_Texture* texMesa = cargarTexturaCarta(mesa, renderer);
 
-        SDL_Rect rMesa = {
+        SDL_Rect rMesa = { 650, 260, 100, 150 };
 
-            650,
-            260,
-            100,
-            150
-        };
-
-        SDL_RenderCopy(
-            renderer,
-            texMesa,
-            NULL,
-            &rMesa
-        );
-
+        SDL_RenderCopy(renderer, texMesa, NULL, &rMesa);
         SDL_DestroyTexture(texMesa);
 
+        // ================= INDICADOR DE COLOR ACTIVO =================
+       
+        SDL_Rect indicadorColor = {
+            770,   
+            310,   
+            50,    
+            50     
+        };
+
+        switch (colorActivo) {
+            case 1: 
+                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+                break;
+            case 2: 
+                SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+                break;
+            case 3: 
+                SDL_SetRenderDrawColor(renderer, 0, 150, 0, 255); 
+                break;
+            case 4: 
+                SDL_SetRenderDrawColor(renderer, 255, 220, 0, 255);
+                break;
+            default: 
+                SDL_SetRenderDrawColor(renderer, 128, 128, 128, 255);
+                break;
+        }
+
+        SDL_RenderFillRect(renderer, &indicadorColor);
+        
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderDrawRect(renderer, &indicadorColor);
+
+        // ================= BOTÓN PASAR =================
         SDL_Rect btnPasar = { 530, 260, 100, 50 };
-        SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255); // Color Gris
+        SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255); 
         SDL_RenderFillRect(renderer, &btnPasar);
         dibujarTexto(renderer, fuente, "PASO", 545, 270);
 
